@@ -1,0 +1,16 @@
+name: Hello world
+author: Prem Prakash
+description: Some description
+inputs:
+    who-to-greet:
+        description: "who to greet"
+        required: true
+        default: Prem
+
+outputs:
+    time:
+        description: "The greeting time"
+
+runs:
+    using: "node12"
+    main: "dist/index.js"
