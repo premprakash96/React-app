@@ -2,9 +2,8 @@ name: CI
 on:
     pull_request:
         branches: [develop, master]
-
-    push:
-        branches: [develop, master]
+    # push:       temporarily commented for pushing to master to check the user defined actions
+    #     branches: [develop, master]
 
 jobs:
     build:
