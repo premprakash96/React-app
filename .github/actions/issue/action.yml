@@ -1,25 +1,25 @@
-name: 'Open Github Issue'
-author: 'premprakash7'
-description: 'Opens a Github issue'
+name: "Open Github Issue"
+author: "premprakash7"
+description: "Opens a Github issue"
 inputs:
-  token:
-    description: 'Github Token'
-    required: true
+    token:
+        description: "Github Token"
+        required: true
 
-  title:
-    description: 'Issue Title'
-    required: true
+    title:
+        description: "Issue Title"
+        required: true
 
-  body:
-    description: 'Issue body'
+    body:
+        description: "Issue body"
 
-  assignees:
-    description: 'Issue Assignees'
-  
+    assignees:
+        description: "Issue Assignees"
+
 outputs:
-  issue:
-    description: 'The issue object as a JSON string'
+    issue:
+        description: "The issue object as a JSON string"
 
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+    using: "node12"
+    main: "dist/index.js"

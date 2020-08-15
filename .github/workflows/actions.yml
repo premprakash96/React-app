@@ -8,14 +8,14 @@ jobs:
             - uses: ./.github/actions/issue
               id: issue
               with:
-                token: ${{ secrets.GITHUB_TOKEN }}
-                title: Title
-                body: Body
-                assignees: |
-                  premprakash7
-                  premprakash96
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  title: Title
+                  body: Body
+                  assignees: |
+                      premprakash7
+                      premprakash96
             - run: |
-                echo ${{ steps.issue.outputs.issue }}
+                  echo ${{ steps.issue.outputs.issue }}
             - uses: ./.github/actions/hello
               id: hello
               with:
