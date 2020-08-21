@@ -3,71 +3,56 @@
 require_once 'vendor/autoload.php';
 Requests::register_autoloader();
 
-var_dump($argv);
-var_dump($_ENV);
+// var_dump($argv);
+// var_dump($_ENV);
 
-// $response = Requests::post(
-//     "https://hooks.slack.com/services/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", array(
-//         'Content-type' => 'application/json'
-//     ),
-//     json_encode(array (
-//         'blocks' => 
-//         array (
-//           0 => 
-//           array (
-//             'type' => 'section',
-//             'text' => 
-//             array (
-//               'type' => 'mrkdwn',
-//               'text' => 'You have a new request:
-//       *<fakeLink.toEmployeeProfile.com|Fred Enriquez - New device request>*',
-//             ),
-//           ),
-//           1 => 
-//           array (
-//             'type' => 'section',
-//             'fields' => 
-//             array (
-//               0 => 
-//               array (
-//                 'type' => 'mrkdwn',
-//                 'text' => '*Type:*
-//       Computer (laptop)',
-//               ),
-//               1 => 
-//               array (
-//                 'type' => 'mrkdwn',
-//                 'text' => '*When:*
-//       Submitted Aut 10',
-//               ),
-//               2 => 
-//               array (
-//                 'type' => 'mrkdwn',
-//                 'text' => '*Last Update:*
-//       Mar 10, 2015 (3 years, 5 months)',
-//               ),
-//               3 => 
-//               array (
-//                 'type' => 'mrkdwn',
-//                 'text' => '*Reason:*
-//       All vowel keys aren\'t working.',
-//               ),
-//               4 => 
-//               array (
-//                 'type' => 'mrkdwn',
-//                 'text' => '*Specs:*
-//       "Cheetah Pro 15" - Fast, really fast"',
-//               ),
-//             ),
-//           ),
-//         ),
-//       )
-        
-//     )
-//     );
+echo "::debug ::Sending a request to slack\n";
 
-//     var_dump($response);
+$response = Requests::post(
+    $_ENV['INPUT_SLACK_WEBHOOK'],
+    array(
+        'Content-type' => 'application/json'
+    ),
+    json_encode(array (
+        'blocks' => 
+            array (
+                array (
+                    "type" => "section",
+                    "text" => array (
+                        "type" => "mrkdwn",
+                        "text" => $_ENV['INPUT_MESSAGE'],
+                    ),
+                ),
+                array (
+                    "type" => "section",
+                    "fields" => array (
+                        array (
+                            "type" => "mrkdwn",
+                            "text" => "*Repository:*\n{$_ENV['GITHUB_REPOSITORY']}",
+                        ),
+                        array (
+                            "type" => "mrkdwn",
+                            "text" => "*Event:*\n{$_ENV['GITHUB_EVENT_NAME']}",
+                        ),
+                        array (
+                            "type" => "mrkdwn",
+                            "text" => "*Ref:*\n{$_ENV['GITHUB_REF']}",
+                        ),
+                        array (
+                            "type" => "mrkdwn",
+                            "text" => "*SHA:*\n{$_ENV['GITHUB_SHA']}",
+                        ),
+                    ),
+                ),
+            ),
+    ))
+);
 
-// if (!$response->success) {
-//     echo $response->body;
-// }
+echo "::group::Slack Reponse\n";
+var_dump($response);
+echo "::endgroup::\n";
+
+if(!$response->success) {
+    echo $response->body;
+    exit(1);
+}
